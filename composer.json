@@ -1,0 +1,18 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "app/controllers/",
+            "Core\\": "core/",
+            "Model\\": "app/models/",
+            "Exception\\": "core/exceptions/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    },
+    "require": {
+        "mustache/mustache": "^2.14"
+    }
+}

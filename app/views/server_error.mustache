@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Error 404</title>
+    </head>
+    <body>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+            }
+            header {
+                background: #638889;
+            }
+            header h1 {
+                font-size: 30px;
+                font-weight: bold;
+                padding: 20px;
+                color: #EBD9B5;
+                margin: 0;
+            }
+            header div {
+                background: #9DBC98;
+                padding: 5px 20px;
+                color: #F9EFDB;
+                font-size: 18px;
+            }
+
+            pre {
+                padding: 0 20px;
+            }
+        </style>
+        <header>
+            <h1>Error! The server returned a "{{ error }}".</h1>
+            <div>
+                {{ description }}
+            </div>
+        </header>
+        <pre>
+{{ log }}
+        </pre>
+    </body>
+</html>
