@@ -4,6 +4,11 @@ namespace Controller;
 
 class ServerError extends \Core\BaseController
 {
+    private int     $code;
+    private string  $error;
+    private string  $description;
+    private ?string $log;
+
     public function __construct(int $code, string $error, string $description, ?string $log = null)
     {
         $this->code         = $code;
