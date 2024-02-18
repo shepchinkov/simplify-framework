@@ -19,7 +19,7 @@ abstract class Router
 {
 
     // Хранит в себе объекты класса StaticRoute.
-    private static array $routes;
+    private static array $routes = [];
     
     /**
     * Добавляет новое сравнение контроллера с URI.
@@ -44,18 +44,35 @@ abstract class Router
     * Осуществляет поиск контроллера по URI.
     *
     * Имеется возможность поиска контроллера с фильтром по методу, который он реализует.
+    * Алгоритм фильтрации по методу осуществляется следующим образом:
+    *   1. Сначала метод пытается найти контроллер, который реализует определенный метод, указанный в $method.
+    *   2. Затем пытается найти контроллер, реализующий все методы, т.е. $method = "ALL".
+    * 
+    * Если в шаге №1 был найден ответ, то возвращается он. Если нет, возвращается контроллер из шага №2. 
+    * Если ни один контроллер не был найден, возвращается null.
+    *
+    * Контроллеры, реализующие конкретные HTTP методы, более специфичные. Из этого следует, что они имеют больший приоритет во время поиска.
     *
     * @param string $uri URI, который реализует контроллер.
     * @param string $method Фильтр по методу, который реализует контроллер. 
     */
-    private static function findController(string $uri, string $method = "GET"): ?IController
+    private static function findController(string $uri, string $method = "ALL"): ?IController
     {
+        // Ищет контроллер, реализующий конкретный метод, указанный в $method.
         foreach (self::$routes as $route) {
             if ($route->uri == $uri and $route->method == strtolower($method)) {
                 return $route->controller;
             }
         }
 
+        // Ищет контроллер, реализующий все HTTP методы.
+        foreach (self::$routes as $route) {
+            if ($route->uri == $uri and $route->method == "all") {
+                return $route->controller;
+            }
+        }
+
+        // В противном случае возвращает null.
         return null;
     }
 
